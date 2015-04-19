@@ -11,7 +11,9 @@
 #include <sys/types.h>
 
 #define BAUDRATE B115200
-#define MODEMDEVICE "/dev/ttyUSB0"
+#ifndef SERIAL_DEVICE
+#define SERIAL_DEVICE "/dev/ttyUSB0"
+#endif
 #define _POSIX_SOURCE 1 /* POSIX compliant source */
 #define FALSE 0
 #define TRUE 1
@@ -146,8 +148,8 @@ main()
 
   echo_write = 0;
 
-  fd = open(MODEMDEVICE, O_RDWR | O_NOCTTY | O_NDELAY);
-  if (fd <0) {perror(MODEMDEVICE); exit(-1); }
+  fd = open(SERIAL_DEVICE, O_RDWR | O_NOCTTY | O_NDELAY);
+  if (fd <0) {perror(SERIAL_DEVICE); exit(-1); }
 
   bzero(&newtio, sizeof(newtio));
   cfmakeraw(&newtio);
